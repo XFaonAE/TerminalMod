@@ -1,0 +1,1 @@
+{"version":3,"file":"Section.d.ts","sourceRoot":"","sources":["Section.ts"],"names":[],"mappings":"AACA,OAAO,WAAW,MAAM,eAAe,CAAC;AAExC,MAAM,CAAC,OAAO,OAAO,OAAO;IACxB;;OAEG;IACI,WAAW,EAAE,WAAW,CAAC;IAEhC;;OAEG;gBACgB,WAAW,EAAE,WAAW;IAI3C;;;;OAIG;IACI,MAAM,CAAC,QAAQ,EAAE,MAAM,EAAE,UAAU,GAAE,GAAQ;CA0CvD"}
