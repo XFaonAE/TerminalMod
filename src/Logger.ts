@@ -37,25 +37,24 @@ export default class Logger {
      * @param { object } rawOptions Options for logging the error
      */
     public error(message: string, rawOptions: any = {}) {
-        // Setup options
         var templateOptions: any = {
             noQuite: false
         }
         var options: any = Object.assign(templateOptions, rawOptions);
-
-        // Create stack trace
         const stack: Array<any> = this.getStackTrace();
         
-        // Log error
         console.log(chalk.hex("#ff5555")("[ Internal Error ]"), message);
         console.log(chalk.hex("#555555")("─────") + chalk.hex("#ff5555")("─────") + chalk.hex("#555555")("─────"));
 
         stack.forEach((value: string, index: number) => {
-            console.log(chalk.hex("#555555")("[ " + chalk.hex("#ffffff")("#" + index) + " ]"), value);
+            var trace: string = value;
+            trace = trace.replace(new RegExp(/at (.+?) \((.+?)\)/, "g"), "at " + chalk.hex("#555555")("$1") + " ( $2 )");
+            
+            var line: string = chalk.hex("#aaa")("[ " + chalk.hex("#ffffff")("#" + index) + " ] ") + trace;
+            console.log(line);
         });
         console.log(chalk.hex("#555555")("─────") + chalk.hex("#ff5555")("─────") + chalk.hex("#555555")("─────"));
 
-        // Stop is applicable
         if (!options.noQuite) {
             process.exit(0);
         }

@@ -34,6 +34,11 @@ export default class CliAnimator {
     public message: string;
 
     /**
+     * @var { boolean} animatorLoopRunning Is the animator rendering
+     */
+    public animatorLoopRendering: boolean;
+
+    /**
      * Create animations inside of the command line
      * @param { TerminalMod } terminalMod TerminalMod class object
      */
@@ -44,6 +49,7 @@ export default class CliAnimator {
         this.animatorLoopRunning = false;
         this.frameChangeDelay = 100;
         this.message = "";
+        this.animatorLoopRendering = false;
     }
 
     /**
@@ -82,8 +88,10 @@ export default class CliAnimator {
             newRenderedFrames.push(value + " " + rawMessage);
         });
         this.renderedFrames = newRenderedFrames;
+        
         this.message = rawMessage;
 
+        this.animatorLoopRendering = true;
         if (!this.animatorLoopRunning) {
             this.animatorLoopRunning = true;
             this.startAnimatorLoop();
@@ -94,27 +102,25 @@ export default class CliAnimator {
      * Start the frame animation loop
      */
     public startAnimatorLoop() {
-        (async () => {
-            const nextFrameRender: CallableFunction = () => {
-                if (this.animatorLoopRunning) {
-                    setTimeout(() => {
-                        if (this.animatorLoopRunning) {
-                            process.stdout.write("\r" + this.renderedFrames[this.currentFrameIndex]);
-                        }
-                        this.currentFrameIndex++;
+        const nextFrameRender: CallableFunction = () => {
+            if (this.animatorLoopRunning) {
+                setTimeout(() => {
+                    if (this.animatorLoopRendering) {
+                        process.stdout.write("\r" + this.renderedFrames[this.currentFrameIndex]);
+                    }
+                    this.currentFrameIndex++;
 
-                        if (this.currentFrameIndex > this.renderedFrames.length - 1) {
-                            this.currentFrameIndex = 0;
-                            nextFrameRender();
-                            return;
-                        }
-
+                    if (this.currentFrameIndex > this.renderedFrames.length - 1) {
+                        this.currentFrameIndex = 0;
                         nextFrameRender();
-                    }, this.frameChangeDelay);
-                }
-            };
-            nextFrameRender();
-        })();
+                        return;
+                    }
+
+                    nextFrameRender();
+                }, this.frameChangeDelay);
+            }
+        };
+        nextFrameRender();
     }
 
     /**
@@ -123,7 +129,8 @@ export default class CliAnimator {
      * @param { object } rawOptions Options
      */
     public success(rawMessage: string | null = null, rawOptions: object = {}) {
-        this.animatorLoopRunning = false;
+        this.animatorLoopRendering = false;
+        this.frameChangeDelay = 50;
         this.renderedFrames = [];
         interface Options {
             successIcon: string

@@ -25,6 +25,10 @@ export default class CliAnimator {
      */
     message: string;
     /**
+     * @var { boolean} animatorLoopRunning Is the animator rendering
+     */
+    animatorLoopRendering: boolean;
+    /**
      * Create animations inside of the command line
      * @param { TerminalMod } terminalMod TerminalMod class object
      */

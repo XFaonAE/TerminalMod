@@ -35,21 +35,20 @@ var Logger = /** @class */ (function () {
      */
     Logger.prototype.error = function (message, rawOptions) {
         if (rawOptions === void 0) { rawOptions = {}; }
-        // Setup options
         var templateOptions = {
             noQuite: false
         };
         var options = Object.assign(templateOptions, rawOptions);
-        // Create stack trace
         var stack = this.getStackTrace();
-        // Log error
         console.log(chalk_1.default.hex("#ff5555")("[ Internal Error ]"), message);
         console.log(chalk_1.default.hex("#555555")("─────") + chalk_1.default.hex("#ff5555")("─────") + chalk_1.default.hex("#555555")("─────"));
         stack.forEach(function (value, index) {
-            console.log(chalk_1.default.hex("#555555")("[ " + chalk_1.default.hex("#ffffff")("#" + index) + " ]"), value);
+            var trace = value;
+            trace = trace.replace(new RegExp(/at (.+?) \((.+?)\)/, "g"), "at " + chalk_1.default.hex("#555555")("$1") + " ( $2 )");
+            var line = chalk_1.default.hex("#aaa")("[ " + chalk_1.default.hex("#ffffff")("#" + index) + " ] ") + trace;
+            console.log(line);
         });
         console.log(chalk_1.default.hex("#555555")("─────") + chalk_1.default.hex("#ff5555")("─────") + chalk_1.default.hex("#555555")("─────"));
-        // Stop is applicable
         if (!options.noQuite) {
             process.exit(0);
         }
