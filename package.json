@@ -29,6 +29,8 @@
   "homepage": "https://github.com/AxeriDev/TerminalMod#readme",
   "dependencies": {
     "chalk": "^4.1.1",
+    "hide-terminal-cursor": "^0.0.1",
+    "jetty": "^0.2.1",
     "typescript": "^4.3.4"
   },
   "devDependencies": {

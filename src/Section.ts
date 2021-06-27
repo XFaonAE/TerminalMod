@@ -21,7 +21,7 @@ export default class Section {
      */
     public create(rawTitle: string, rawOptions: any = {}) {
         // Setup options
-        var templateOptions: any = {
+        var templateOptions: object = {
             barHex: "#555555",
             titlePadding: 5,
             titlePaddingChar: " ",

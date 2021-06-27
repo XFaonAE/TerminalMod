@@ -1,6 +1,16 @@
-import TerminalMod from '../src/TerminalMod';
+import chalk from "chalk";
+import TerminalMod from "../src/TerminalMod";
 
-// Initialize
-const terminalMod = new TerminalMod();
+const tm = new TerminalMod();
 
-terminalMod.section.create("Terminal Mod LONG NAMEEEEEEEEEEEEEEEEEEEEE");
+tm.section.create("Testing environment");
+tm.cliAnimator.print("Hello, TerminalMod!", {
+    interval: 50
+});
+
+setTimeout(() => {
+    tm.cliAnimator.success("Done");
+    tm.cliAnimator.print("Loading renderer engine...", {
+        interval: 50
+    });
+}, 1000)
